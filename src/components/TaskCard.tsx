@@ -5,22 +5,22 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+// import { Input } from "@/components/ui/input"
+// // import { Label } from "@/components/ui/label"
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select"
 import axios from "axios"
 import { useSession } from "next-auth/react"
-import { Dialogg } from "./Dialog";
+// import { Dialogg } from "./Dialog";
 import { UpdateDialog } from "./UpdateTaskDialog";
 
 
@@ -68,35 +68,46 @@ export function TaskCard() {
         setIsDialogOpen(true); // Open the dialog
       };
 
-    const handleSave = (task: any) => {
-      if (task._id) {
-          axios.put(`/api/update-task/${task._id}`, task)
-              .then(response => {
-                  console.log('Task updated:', response.data);
-                  // Update the tasks state after successful update
-                  setTasks(tasks.map(t => t._id === task._id ? task : t));
-              })
-              .catch(err => {
-                  console.error('Error updating task:', err);
-              });
-      } else {
-          // Create a new task
-          axios.post('/api/create-task', task)
-              .then(response => {
-                  console.log('Task created:', response.data);
-                  // Add the new task to the tasks state
-                  setTasks([...tasks, response.data.task]);
-              })
-              .catch(err => {
-                  console.error('Error creating task:', err);
-              });
-      }
-  };
+  //   const handleSave = (task: any) => {
+  //     if (task._id) {
+  //         axios.put(`/api/update-task/${task._id}`, task)
+  //             .then(response => {
+  //                 console.log('Task updated:', response.data);
+  //                 // Update the tasks state after successful update
+  //                 setTasks(tasks.map(t => t._id === task._id ? task : t));
+  //             })
+  //             .catch(err => {
+  //                 console.error('Error updating task:', err);
+  //             });
+  //     } else {
+  //         // Create a new task
+  //         axios.post('/api/create-task', task)
+  //             .then(response => {
+  //                 console.log('Task created:', response.data);
+  //                 // Add the new task to the tasks state
+  //                 setTasks([...tasks, response.data.task]);
+  //             })
+  //             .catch(err => {
+  //                 console.error('Error creating task:', err);
+  //             });
+  //     }
+  // };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false); // Close the dialog
     setSelectedTask(null); // Clear selected task
   };
+
+  if(loading){
+    return <div>Loading...</div>
+  }
+
+  if(!session){
+    return <div>Login to view tasks</div>
+  }
+  if(!error){
+    console.log("Error: ", error);
+  }
 
   return (
 

@@ -1,3 +1,91 @@
+// import mongoose, { Schema, Document, Types } from 'mongoose';
+
+// export enum TaskStatus {
+//     ToDo = "ToDo",
+//     InProgress = "InProgress",
+//     Completed = "Completed",
+// }  
+
+// export enum PriorityStatus {
+//     Low = "Low",
+//     Medium = "Medium",
+//     High = "High"
+// }
+
+// export interface Task extends Document {
+//   title: String;
+//   description: String;
+//   status: {
+//     type: String,
+//     enum: ['Todo', 'InProgress', 'Completed'],
+//     required: true,
+//   },
+//   priority: {
+//     type: String,
+//     enum: ['Low', 'Medium', 'High'],
+//     required: true,
+//   },
+//   DueDate: Date,
+//   createdAt: Date,
+//   lastUpdated: Date
+// }
+
+// const TaskSchema: Schema<Task> = new mongoose.Schema({
+//   title: {
+//     type: String,
+//     required: true,
+//   },
+//   description: {
+//     type: String,
+//     required: false,
+//   },
+//   status: {
+//     type: String,
+//     enum: Object.values(TaskStatus),
+//     default: TaskStatus.ToDo,
+//     required: true,
+//   },
+//   priority: {
+//     type: String,
+//     enum: Object.values(PriorityStatus),
+//     default: PriorityStatus.Medium,
+//     required: true,
+//   },
+//   DueDate: {
+//     type: Date,
+//     required: false,
+//   }
+// }, {timestamps: { createdAt: 'createdAt', updatedAt: 'lastUpdated' }});
+
+// export interface User extends Document {
+//     email: String;
+//     password: String;
+//     tasks: Types.ObjectId[];
+// }
+
+// // Updated User schema
+// const UserSchema: Schema<User> = new mongoose.Schema({
+//   email: {
+//     type: String,
+//     required: [true, 'Email is required'],
+//     unique: true,
+//     match: [/.+\@.+\..+/, 'Please use a valid email address'],
+//   },
+//   password: {
+//     type: String,
+//     required: [true, 'Password is required'],
+//   },
+//   tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }]
+// });
+
+// const UserModel = mongoose.models.User  || mongoose.model<User>('User', UserSchema);
+
+// const TaskModel = mongoose.models.Task  || mongoose.model<Task>('Task', TaskSchema);
+
+// export {UserModel, TaskModel};
+
+
+
 import mongoose, { Schema, Document, Types } from 'mongoose';
 
 export enum TaskStatus {
@@ -13,73 +101,72 @@ export enum PriorityStatus {
 }
 
 export interface Task extends Document {
-  title: string;
-  description: string;
-  status: {
-    type: String,
-    enum: ['Todo', 'InProgress', 'Completed'],
-    required: true,
-  },
-  priority: {
-    type: String,
-    enum: ['Low', 'Medium', 'High'],
-    required: true,
-  },
-  DueDate: Date,
-  createdAt: Date,
-  lastUpdated: Date
+    title: string; // Changed to primitive string
+    description: string; // Changed to primitive string
+    status: {
+        type: string; // Changed to primitive string
+        enum: ['Todo', 'InProgress', 'Completed'];
+        required: true;
+    };
+    priority: {
+        type: string; // Changed to primitive string
+        enum: ['Low', 'Medium', 'High'];
+        required: true;
+    };
+    DueDate: Date;
+    createdAt: Date;
+    lastUpdated: Date;
 }
 
 const TaskSchema: Schema<Task> = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: false,
-  },
-  status: {
-    type: String,
-    enum: Object.values(TaskStatus),
-    default: TaskStatus.ToDo,
-    required: true,
-  },
-  priority: {
-    type: String,
-    enum: Object.values(PriorityStatus),
-    default: PriorityStatus.Medium,
-    required: true,
-  },
-  DueDate: {
-    type: Date,
-    required: false,
-  }
-}, {timestamps: { createdAt: 'createdAt', updatedAt: 'lastUpdated' }});
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: false,
+    },
+    status: {
+        type: String,
+        enum: Object.values(TaskStatus),
+        default: TaskStatus.ToDo,
+        required: true,
+    },
+    priority: {
+        type: String,
+        enum: Object.values(PriorityStatus),
+        default: PriorityStatus.Medium,
+        required: true,
+    },
+    DueDate: {
+        type: Date,
+        required: false,
+    }
+}, { timestamps: { createdAt: 'createdAt', updatedAt: 'lastUpdated' } });
 
 export interface User extends Document {
-    email: string;
-    password: string;
+    email: string; // Changed to primitive string
+    password: string; // Changed to primitive string
     tasks: Types.ObjectId[];
 }
 
 // Updated User schema
 const UserSchema: Schema<User> = new mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, 'Email is required'],
-    unique: true,
-    match: [/.+\@.+\..+/, 'Please use a valid email address'],
-  },
-  password: {
-    type: String,
-    required: [true, 'Password is required'],
-  },
-  tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }]
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true,
+        match: [/.+\@.+\..+/, 'Please use a valid email address'],
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+    },
+    tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }]
 });
 
-const UserModel = mongoose.models.User  || mongoose.model<User>('User', UserSchema);
+const UserModel = mongoose.models.User || mongoose.model<User>('User', UserSchema);
+const TaskModel = mongoose.models.Task || mongoose.model<Task>('Task', TaskSchema);
 
-const TaskModel = mongoose.models.Task  || mongoose.model<Task>('Task', TaskSchema);
-
-export {UserModel, TaskModel};
+export { UserModel, TaskModel };

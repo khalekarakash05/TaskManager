@@ -3,7 +3,7 @@
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
@@ -50,10 +50,10 @@ export default function SignUpForm() {
     } catch (error) {
       console.error('Error during sign-up:', error);
 
-      const axiosError = error as AxiosError<ApiResponse>;
+      // const axiosError = error as AxiosError<ApiResponse>;
 
       // Default error message
-      let errorMessage = axiosError.response?.data.message;
+      // let errorMessage = axiosError.response?.data.message;
       ('There was a problem with your sign-up. Please try again.');
 
       toast.error("Sign Up Failed");

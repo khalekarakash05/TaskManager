@@ -21,6 +21,11 @@ export function KanBanDashboard() {
   const [selectedTask, setSelectedTask] = useState<any | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
+
+  if(tasks){
+    console.log(tasks);
+  }
+
   useEffect(() => {
     if (status === 'authenticated') {
       axios.get('/api/get-all-tasks')
@@ -87,9 +92,9 @@ export function KanBanDashboard() {
     
     try {
 
-      let updatedTodoTasks = [...todoTasks];
-      let updatedInProgressTasks = [...inProgressTasks];
-      let updatedCompletedTasks = [...completedTasks];
+      const updatedTodoTasks = [...todoTasks];
+      const updatedInProgressTasks = [...inProgressTasks];
+      const updatedCompletedTasks = [...completedTasks];
 
       const [movedTask] = (
         source.droppableId === 'ToDo' ? updatedTodoTasks :
@@ -135,25 +140,25 @@ export function KanBanDashboard() {
 
   // const getColumnTasks = (status: string) => tasks.filter(task => task.status === status);
 
-  const getColumnTasks = (status: string) => {
-    const filteredTasks = tasks.filter(task => task.status === status);
-    return filteredTasks;
-  };
+  // const getColumnTasks = (status: string) => {
+  //   const filteredTasks = tasks.filter(task => task.status === status);
+  //   return filteredTasks;
+  // };
 
   if (typeof window === "undefined") {
     return null;
   }
 
-  const handleSaveTask = (updatedTask: any) => {
-    axios.put(`/api/update-task/${updatedTask._id}`, updatedTask)
-      .then((response) => {
-        setTasks(tasks.map(t => t._id === updatedTask._id ? updatedTask : t));
-        handleCloseDialog();
-      })
-      .catch((err) => {
-        console.error('Error updating task:', err);
-      });
-  };
+  // const handleSaveTask = (updatedTask: any) => {
+  //   axios.put(`/api/update-task/${updatedTask._id}`, updatedTask)
+  //     .then((response) => {
+  //       setTasks(tasks.map(t => t._id === updatedTask._id ? updatedTask : t));
+  //       handleCloseDialog();
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error updating task:', err);
+  //     });
+  // };
 
   const handleOpenDialog = (task: any) => {
     setSelectedTask(task);
@@ -164,6 +169,12 @@ export function KanBanDashboard() {
     setIsDialogOpen(false);
     setSelectedTask(null);
   };
+  if(loading){
+    return <div>Loading...</div>;
+  }
+  if(!session){
+    console.log("Session: ", session);
+  }
 
   return (
     <div>
@@ -195,13 +206,13 @@ export function KanBanDashboard() {
 
           {/* ToDo Tasks */}
           <Droppable droppableId="ToDo">
-            {(provided, snapshot) => (
+            {(provided) => (
               <div className='m-2' ref={provided.innerRef} {...provided.droppableProps}>
                 <h2 className='bg-amber-400 mb-2 w-fit text-center mx-auto p-2 rounded-sm hover:bg-amber-500'>ToDo Tasks</h2>
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {todoTasks.map((task, index) => (
                     <Draggable key={task._id.toString()} draggableId={task._id.toString()} index={index}>
-                      {(provided, snapshot) => (
+                      {(provided) => (
                         <div
                           className='flex border flex-col min-h-36 p-4 rounded-lg mb-2'
                           ref={provided.innerRef}
@@ -239,13 +250,13 @@ export function KanBanDashboard() {
 
           {/* In Progress Tasks */}
           <Droppable droppableId="InProgress">
-            {(provided, snapshot) => (
+            {(provided) => (
               <div className='m-2'>
                 <h2 className='bg-blue-400 mb-2 w-fit text-center mx-auto p-2 rounded-sm hover:bg-blue-500'>InProgress Tasks</h2>
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {inProgressTasks.map((task, index) => (
                     <Draggable key={task._id} draggableId={task._id.toString()} index={index}>
-                      {(provided, snapshot) => (
+                      {(provided) => (
                         <div
                           className='flex border flex-col min-h-36 p-4 rounded-lg mb-2'
                           ref={provided.innerRef}
@@ -280,13 +291,13 @@ export function KanBanDashboard() {
 
           {/* Completed Tasks */}
           <Droppable droppableId="Completed">
-            {(provided, snapshot) => (
+            {(provided) => (
               <div className='m-2'>
                 <h2 className='bg-green-400 mb-2 w-fit text-center mx-auto p-2 rounded-sm hover:bg-green-500'>Completed Tasks</h2>
                 <div {...provided.droppableProps} ref={provided.innerRef}>
                   {completedTasks.map((task, index) => (
                     <Draggable key={task._id} draggableId={task._id.toString()} index={index}>
-                      {(provided, snapshot) => (
+                      {(provided) => (
                         <div
                           className='flex border flex-col min-h-36 p-4 rounded-lg mb-2'
                           ref={provided.innerRef}

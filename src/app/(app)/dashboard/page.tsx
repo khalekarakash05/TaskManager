@@ -23,8 +23,11 @@ export default function TabsDemo() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-    const [selectedTask, setSelectedTask] = useState<any>(null);
+    // const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+    // const [selectedTask, setSelectedTask] = useState<any>(null);
+    if(tasks){
+        console.log(tasks)
+    }
 
 
     useEffect(() => {
@@ -40,35 +43,47 @@ export default function TabsDemo() {
                     setLoading(false);
                 });
         }
-    }, [status, setIsDialogOpen]);
+    }, [status, ]);
 
-    const handleSaveTask = (task: any) => {
-        if (task._id) {
-            // Update existing task
-            axios.put(`/api/update-task/${task._id}`, task)
-                .then(response => {
-                    setTasks(tasks.map(t => (t._id === task._id ? response.data.task : t)));
-                })
-                .catch(err => {
-                    console.error('Error updating task:', err);
-                });
-        } else {
-            // Create a new task
-            axios.post('/api/create-task', task)
-                .then(response => {
-                    setTasks([...tasks, response.data.task]);
-                })
-                .catch(err => {
-                    console.error('Error creating task:', err);
-                });
-        }
-        setIsDialogOpen(false);
-    };
+    // const handleSaveTask = (task: any) => {
+    //     if (task._id) {
+    //         // Update existing task
+    //         axios.put(`/api/update-task/${task._id}`, task)
+    //             .then(response => {
+    //                 setTasks(tasks.map(t => (t._id === task._id ? response.data.task : t)));
+    //             })
+    //             .catch(err => {
+    //                 console.error('Error updating task:', err);
+    //             });
+    //     } else {
+    //         // Create a new task
+    //         axios.post('/api/create-task', task)
+    //             .then(response => {
+    //                 setTasks([...tasks, response.data.task]);
+    //             })
+    //             .catch(err => {
+    //                 console.error('Error creating task:', err);
+    //             });
+    //     }
+    //     setIsDialogOpen(false);
+    // };
 
 
 
     if (status === 'loading') {
         return <div>Loading...</div>; 
+    }
+
+    if (loading) {
+        return <div>Loading...</div>; 
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    if (!session) {
+        return <p>Please sign in to access this page.</p>;
     }
 
   return (

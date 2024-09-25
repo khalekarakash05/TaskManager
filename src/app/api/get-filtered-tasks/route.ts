@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { UserModel } from "@/model/User";
+// import { UserModel } from "@/model/User";
 import dbConnect from "@/lib/dbConnect";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
