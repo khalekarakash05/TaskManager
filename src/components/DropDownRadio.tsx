@@ -31,7 +31,6 @@ export function DropdownMenuRadio({currentState, secondState, thirdState, taskId
   const handleStatusChange = async (newStatus: string) => {
     setStatus(newStatus);
     try {
-      console.log("here we are in the status", newStatus)
       console.log("Sending request with taskId:", taskId, "and newStatus:", newStatus);
       await axios.patch(`/api/change-status/${taskId}`, { newStatus });
 

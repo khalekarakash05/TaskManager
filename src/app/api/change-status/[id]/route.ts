@@ -10,13 +10,11 @@ export async function PATCH(request: NextRequest, { params }: { params: { taskId
     await dbConnect();
 
     // const { taskId } = params;
-    const newStatus = await request.json();
-    console.log("akash", newStatus.status);
     const taskId = (request.nextUrl.pathname.split("/").pop()) || (params);
-    // const { newStatus } = await request.json();
-    // console.log("Received taskId:", newStatus);
+    const { newStatus } = await request.json();
+
     console.log("Received taskId:", taskId);
-    // console.log("Received newStatus:", newStatus);
+    console.log("Received newStatus:", newStatus);
 
     try {
         const session = await getServerSession(authOptions);
@@ -58,7 +56,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { taskId
 
         // task.status = newStatus;
 
-        const updatedTask = await TaskModel.findByIdAndUpdate(taskId, { status: newStatus.status }, { new: true });
+        const updatedTask = await TaskModel.findByIdAndUpdate(taskId, { status: newStatus }, { new: true });
 
 
         await user.save();

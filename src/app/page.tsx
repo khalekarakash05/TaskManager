@@ -1,7 +1,21 @@
 // src/app/page.tsx
-import { redirect } from 'next/navigation';
+// import { redirect } from "next/navigation";
+
+// 'use client'
+
+import Footer from "@/components/LandingPage/Footer";
+import HeroSection from "@/components/LandingPage/HeroSection";
+import Reviews from "@/components/LandingPage/Reviews";
+import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 
 export default function Home() {
-  // Server-side redirect to the /sign-in page
-  redirect('/sign-in');
+  return (
+    <div>
+      <Navbar/>
+      <HeroSection/>
+      <Reviews/>
+      <Footer />
+    </div>
+  )
 }

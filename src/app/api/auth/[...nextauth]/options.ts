@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt, { compare } from 'bcryptjs';
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from '@/lib/dbConnect';
